@@ -16,10 +16,21 @@ class Gobang:
     def __init__(self):
         self.window = Tk()
         self.window.title('Gobang (Five in a Row)')
-        self.canvas = Canvas(self.window, width=size_of_board, height=size_of_board)
-        self.canvas.pack()
 
-        # Input from user in the form of clicks
+        self.main_frame = Frame(self.window)
+        self.main_frame.pack()
+
+        self.canvas = Canvas(self.main_frame, width=size_of_board, height=size_of_board)
+        self.canvas.grid(row=0, column=0)
+
+        self.turn_label = Label(
+            self.main_frame,
+            text="Player X's Turn",
+            font=("Arial", 14, "bold"),
+            fg=symbol_X_color,
+        )
+        self.turn_label.grid(row=0, column=1, padx=20, sticky=NE)
+
         self.window.bind('<Button-1>', self.click)
 
         self.initialize_board()
@@ -45,6 +56,7 @@ class Gobang:
         self.player_X_turns = True
         self.reset_board = False
         self.gameover = False
+        self.update_turn_label()
 
     def draw_O(self, logical_position):
         grid_position = self.convert_logical_to_grid_position(logical_position)
@@ -74,24 +86,19 @@ class Gobang:
         grid_position = np.array(grid_position)  # Convert list to NumPy array
         return np.array(grid_position // cell_size, dtype=int)
 
-
     def is_winner(self, player):
         player_val = -1 if player == 'X' else 1
 
         for row in range(grid_size):
             for col in range(grid_size):
                 if self.board_status[row][col] == player_val:
-                    # Check horizontally
                     if col + 4 < grid_size and all(self.board_status[row][col:col + 5] == player_val):
                         return True
-                    # Check vertically
                     if row + 4 < grid_size and all(self.board_status[row:row + 5, col] == player_val):
                         return True
-                    # Check diagonally (\ direction)
                     if row + 4 < grid_size and col + 4 < grid_size and all(
                             [self.board_status[row + i][col + i] == player_val for i in range(5)]):
                         return True
-                    # Check anti-diagonally (/ direction)
                     if row + 4 < grid_size and col - 4 >= 0 and all(
                             [self.board_status[row + i][col - i] == player_val for i in range(5)]):
                         return True
@@ -102,10 +109,37 @@ class Gobang:
         color = symbol_X_color if winner == 'X' else symbol_O_color
 
         self.canvas.delete("all")
-        self.canvas.create_text(size_of_board / 2, size_of_board / 2, font="cmr 60 bold", fill=color, text=text)
-        self.canvas.create_text(size_of_board / 2, 3 * size_of_board / 4, font="cmr 20 bold", fill="gray",
-                                text="Click to play again")
+
+
+        font_size = int(size_of_board / 20)  
+        small_font_size = int(size_of_board / 30)  
+
+
+        self.canvas.create_text(
+            size_of_board / 2,
+            size_of_board / 3,  
+            font=f"cmr {font_size} bold",
+            fill=color,
+            text=text,
+        )
+
+
+        self.canvas.create_text(
+            size_of_board / 2,
+            size_of_board / 2,
+            font=f"cmr {small_font_size} bold",
+            fill="gray",
+            text="Click to play again",
+        )
+
         self.reset_board = True
+
+
+    def update_turn_label(self):
+        if self.player_X_turns:
+            self.turn_label.config(text="Player X's Turn", fg=symbol_X_color)
+        else:
+            self.turn_label.config(text="Player O's Turn", fg=symbol_O_color)
 
     def click(self, event):
         if self.reset_board:
@@ -130,6 +164,7 @@ class Gobang:
                     self.display_gameover('O')
 
             self.player_X_turns = not self.player_X_turns
+            self.update_turn_label()
 
 
 game_instance = Gobang()
