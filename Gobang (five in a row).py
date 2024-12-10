@@ -14,11 +14,17 @@ Green_color = '#7BC043'
 
 class Gobang:
     def __init__(self):
+        self.reset_board = False
         self.window = Tk()
         self.window.title('Gobang (Five in a Row)')
+        
+        # Initialize board_status for testing purposes
+        self.board_status = np.zeros((grid_size, grid_size), dtype=int)
+        self.cell_size = size_of_board / grid_size 
 
+        # Starting page
         self.starting_page()
-        self.move_history = []  
+        self.move_history = []  # Stack to store the history of moves
 
     def mainloop(self):
         self.window.mainloop()
@@ -132,8 +138,9 @@ class Gobang:
         )
 
     def convert_grid_to_logical_position(self, grid_position):
-        grid_position = np.array(grid_position)  # Convert list to NumPy array
+        grid_position = np.array(grid_position)
         return np.array(grid_position // cell_size, dtype=int)
+
 
     def is_winner(self, player):
         player_val = -1 if player == 'X' else 1
@@ -152,7 +159,12 @@ class Gobang:
                             [self.board_status[row + i][col - i] == player_val for i in range(5)]):
                         return True
         return False
+    
+    def display_message(self, message):
+        self.turn_label.config(text=message, fg="red")
 
+        self.window.after(2000, self.update_turn_label)
+      
     def display_gameover(self, winner):
         self.gameover = True
         if self.turn_label.winfo_exists():  
@@ -213,7 +225,7 @@ class Gobang:
             if self.player_X_turns:
                 self.draw_X(logical_position)
                 self.board_status[logical_position[0]][logical_position[1]] = -1
-                self.move_history.append((logical_position[0], logical_position[1], -1))  # Track the move
+                self.move_history.append((logical_position[0], logical_position[1], -1))
                 if self.is_winner('X'):
                     self.gameover = True
                     self.display_gameover('X')
@@ -221,7 +233,7 @@ class Gobang:
             else:
                 self.draw_O(logical_position)
                 self.board_status[logical_position[0]][logical_position[1]] = 1
-                self.move_history.append((logical_position[0], logical_position[1], 1))  # Track the move
+                self.move_history.append((logical_position[0], logical_position[1], 1))
                 if self.is_winner('O'):
                     self.gameover = True
                     self.display_gameover('O')
@@ -231,7 +243,8 @@ class Gobang:
             self.update_turn_label()
 
         except ValueError as e:
-            self.display_message(str(e))  
+            self.display_message(str(e))
+
 
             
     def exit_game(self):
