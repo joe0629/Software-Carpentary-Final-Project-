@@ -23,9 +23,24 @@ This project demonstrates fundamental software development practices, including 
 
 ### Running the Game
 1. Clone or download this repository to your local machine.
-2. Navigate to the project directory:
+2. Navigate to the project directory (for example your directory is Z/software_carpentry/final):
    ```bash
-   cd [put you directory here]
+   cd /z/software_carpentry/final
+3. Run the game
+   ```bash
+   python gobang.py
+
+---
+
+## How to Run tests
+### Prerequisites
+- Ensure the game files (gobang.py and test_gobang.py) are in the same directory.
+
+### Running the Game
+1. Clone or download this repository to your local machine.
+2. Navigate to the project directory (for example your directory is Z/software_carpentry/final):
+   ```bash
+   cd /z/software_carpentry/final
 3. Run the game
    ```bash
    python gobang.py
