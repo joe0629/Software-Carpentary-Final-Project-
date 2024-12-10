@@ -1,7 +1,7 @@
 # Software-Carpentry-Final-Project: Gobang Game (Five in a Row)
 
 ## Introduction
-The **Gobang Game (Five in a Row)** is a two-player strategy game where players alternately place stones (X and O) on a 15x15 grid. The objective is to align five of their stones in a row—horizontally, vertically, or diagonally before their opponent. The first one to reach the objective wins. 
+The **Gobang Game (Five in a Row)** is a two-player strategy game where players alternately place stones (X and O) on a 15x15 grid. The objective is to align five of their stones in a row (horizontally, vertically, or diagonally) before their opponent. The first one to reach the objective wins. 
 
 This project demonstrates fundamental software development practices, including the use of Tkinter for GUI design, logical game implementation, and unit testing with Python's `unittest`.
 
@@ -53,8 +53,8 @@ The tests cover the following:
 - Board state updates
 - No-winner scenarios
 
-### How to Play
-1. Launch the game by running gobang.py.
+## How to Play
+1. Launch the game by running `gobang.py`.
 2. The game starts with Player X (red). Players take turns clicking on the grid to place their stones.
 3. A message displays the current player's turn.
 4. If a player clicks an occupied cell, an error message ("Cell already occupied!") is shown for 3 seconds.
