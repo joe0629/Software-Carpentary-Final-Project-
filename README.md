@@ -5,6 +5,8 @@ The **Gobang Game (Five in a Row)** is a two-player strategy game where players 
 
 This project demonstrates fundamental software development practices, including the use of Tkinter for GUI design, logical game implementation, and unit testing with Python's `unittest`.
 
+This is a group project for EN 540.635 Software Carpentry-Fall 2024
+
 ---
 
 ## Features
@@ -59,4 +61,9 @@ The tests cover the following:
 3. A message displays the current player's turn.
 4. If a player clicks an occupied cell, an error message ("Cell already occupied!") is shown for 3 seconds.
 5. The game ends when one player aligns five stones in a row. The winner is announced, and the game can be restarted.
+
+## Authors
+  Jenny Zhang https://github.com/ztjenny<br />
+  Jiale Huang https://github.com/joe0629
+  
 
